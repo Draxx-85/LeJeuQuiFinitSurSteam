@@ -1,5 +1,5 @@
 behaviors:
-  RollerBall:
+  TDTest:
     trainer_type: ppo
     hyperparameters:
       batch_size: 10
@@ -13,11 +13,11 @@ behaviors:
     network_settings:
       normalize: false
       hidden_units: 128
-      num_layers: 2
+      num_layers: 5
     reward_signals:
       extrinsic:
         gamma: 0.99
         strength: 1.0
     max_steps: 500000
     time_horizon: 64
-    summary_freq: 10000
+    summary_freq: 500
