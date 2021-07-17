@@ -19,12 +19,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraTransform;
-    private Animator animator;
 
-    int isWalkinghash;
-    int Jumpinghash;
-    int isGroundedhash;
-    int isInAirhash;
+
 
 
 
@@ -33,24 +29,14 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         inputManager = InputManager.Instance;
         cameraTransform = Camera.main.transform;
-        animator = GetComponent<Animator>();
 
-        isWalkinghash = Animator.StringToHash("isWalking");
-        Jumpinghash = Animator.StringToHash("Jumping");
-        isGroundedhash = Animator.StringToHash("isGrounded");
-        isInAirhash = Animator.StringToHash("isInAir");
+
     }
 
 
     void Update()
     {
         groundedPlayer = controller.isGrounded;
-        animator.SetBool(isGroundedhash, controller.isGrounded);
-
-        if (groundedPlayer)
-        {
-            animator.SetBool(isInAirhash, false);
-        }
 
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -67,15 +53,9 @@ public class PlayerController : MonoBehaviour
         // Changes the height position of the player..
         if (inputManager.PlayerJumpedThisFrame() && groundedPlayer)
         {
-            animator.SetBool(Jumpinghash , true);
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
         }
 
-        if (!groundedPlayer)
-        {
-            animator.SetBool(isInAirhash, true);
-            animator.SetBool(Jumpinghash, false);
-        }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
