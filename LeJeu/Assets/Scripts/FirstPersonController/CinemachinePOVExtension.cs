@@ -12,10 +12,13 @@ public class CinemachinePOVExtension : CinemachineExtension
 
     private InputManager inputManager;
     private Vector3 startingRotation;
+    private Transform Player;
+
 
     protected override void Awake()
     {
         inputManager = InputManager.Instance;
+        Player = this.transform.parent.transform;
         startingRotation.x = 0;
         startingRotation.y = 0;
         base.Awake();
@@ -35,6 +38,7 @@ public class CinemachinePOVExtension : CinemachineExtension
                 startingRotation.x += deltaInput.x * verticalSpeed * Time.deltaTime;
                 startingRotation.y += deltaInput.y * horizontalSpeed * Time.deltaTime;
                 startingRotation.y = Mathf.Clamp(startingRotation.y, -clampAngle, clampAngle);
+                Player.localRotation = Quaternion.Euler(0f, startingRotation.x, 0f);
                 state.RawOrientation = Quaternion.Euler(-startingRotation.y , startingRotation.x , 0f);
             }
         }
